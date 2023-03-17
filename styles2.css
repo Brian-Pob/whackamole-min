@@ -1,0 +1,24 @@
+
+.btn {
+  color: #090909 !important;
+  padding: 0.7em 1.7em !important;
+  font-size: 18px !important;
+  border-radius: 50px !important;
+  background: #e8e8e8 !important;
+  border: 1px solid #e8e8e8 !important;
+  box-shadow: 6px 6px 12px #c5c5c5, -6px -6px 12px #ffffff !important;
+  transition: all 0.3s;
+}
+
+.btn:hover:not(.btn-pressed) {
+  background: linear-gradient(145deg, #cacaca, #f0f0f0) !important;
+  box-shadow: 7px 7px 13px #868686, -7px -7px 13px #ffffff !important;
+  transition: all 0.3s;
+}
+
+.btn-pressed,
+.btn:active {
+  background: linear-gradient(145deg, #cacaca, #f0f0f0) !important;
+  box-shadow: inset 3px 3px 5px #868686, inset -3px -3px 5px #ffffff !important;
+  transition: all 0.3s;
+}

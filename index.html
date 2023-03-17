@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en" class="h-full">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta property="og:url" content="https://wham-js.netlify.app" />
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Whack-a-Mole Minimal Edition" />
+    <meta
+      property="og:description"
+      content="A minimal version of the classic game Whack-a-Mole built with Alpine JS and TailwindCSS"
+    />
+    <meta property="og:image" content="./public/thumb.png" />
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://wham-js.netlify.app" />
+    <meta property="twitter:title" content="Whack-a-Mole Minimal Edition" />
+    <meta
+      property="twitter:description"
+      content="A minimal version of the classic game Whack-a-Mole built with Alpine JS and TailwindCSS"
+    />
+    <meta property="twitter:image" content="./public/thumb.png" />
+    <link rel="icon" href="./public/favicon.png" />
+    <link rel="stylesheet" href="./styles.css" />
+    <link rel="stylesheet" href="./styles2.css" />
+    <script
+      defer
+      src="https://cdn.jsdelivr.net/npm/alpinejs@3.12.0/dist/cdn.min.js"
+    ></script>
+    <link
+      href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css"
+      rel="stylesheet"
+    />
+    <title>Whack-a-Mole Minimal Edition</title>
+
+    <script>
+      // every 2 seconds, randomly change the state of a button
+      //   setInterval(() => {
+      //     const buttons = document.querySelectorAll(".btn.bg-green-500");
+      //     if (buttons.length === 0) return;
+      //     const randomIndex = Math.floor(Math.random() * buttons.length);
+      //     buttons[randomIndex].click();
+      //   }, 2000);
+      document.addEventListener('alpine:init', () => {
+        Alpine.data('game', () => ({
+          buttons: [
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+            false,
+          ],
+          isStarted: false,
+          changeGameState() {
+            this.isStarted = !this.isStarted;
+            if (this.isStarted) {
+              this.startGame();
+            } else {
+              this.stopGame();
+            }
+          },
+          startGame() {
+            this.interval = setInterval(() => {
+              const buttons = document.querySelectorAll('.btn');
+              if (buttons.length === 0) return;
+              const randomIndex = Math.floor(Math.random() * buttons.length);
+              buttons[randomIndex].click();
+            }, 2000);
+          },
+          stopGame() {
+            clearInterval(this.interval);
+          },
+        }));
+      });
+    </script>
+  </head>
+  <body class="h-full flex flex-col">
+    <header class="min-h-[5%] flex items-center justify-center">
+      <h1 class="text-lg font-bold w-max text-center">
+        Whack-a-Mole Minimal Edition
+      </h1>
+    </header>
+    <main class="grid place-items-center grow" x-data="game">
+      <div
+        class="game p-4 min-h-full flex items-center justify-center flex-col"
+        x-data="{
+        buttons: [false, false, false, false, false, false, false, false, false],
+      }"
+      >
+        <!-- 3x3 Grid of buttons. 3 rows and 3 columns. Use tailwind -->
+        <div
+          class="grid grid-cols-3 gap-y-12 gap-x-8 grow-1 shrink-0 min-h-full"
+        >
+          <template x-for="btn in buttons">
+            <button
+              class="btn w-20 h-20 max-w-[20vw] max-h-[20vw] rounded-full"
+              x-bind:class="{
+              '': !btn,
+              'btn-pressed': btn,
+            }"
+              x-on:click="btn = !btn"
+            >
+              &nbsp;
+            </button>
+          </template>
+        </div>
+        <button
+          class="start-btn bg-purple-500 text-white rounded-full p-4 mt-4"
+          @click="changeGameState()"
+          x-text="isStarted ? 'Stop' : 'Start'"
+        ></button>
+      </div>
+    </main>
+    <footer class="text-center text-gray-500 text-xs bg-slate-300 p-4">
+      <div class="links text-3xl">
+        <a href="https://twitter.com/brianmpdotdev" aria-label="Twitter"
+          ><i class="ri-twitter-fill"></i
+        ></a>
+        <a href="https://github.com/Brian-Pob" aria-label="Github"
+          ><i class="ri-github-fill"></i
+        ></a>
+        <a href="https://www.linkedin.com/in/brian-pob/" aria-label="LinkedIn"
+          ><i class="ri-linkedin-box-fill"></i
+        ></a>
+      </div>
+      <p>
+        Whack-a-Mole Minimal Edition by
+        <a href="https://github.com/Brian-Pob" class="inline">Brian Poblete</a>
+      </p>
+      <!-- Alpine JS and TailwindCSS websites -->
+      <p class="inline">
+        Built with
+        <a href="https://alpinejs.dev/" class="underline">Alpine JS</a> and
+        <a href="https://tailwindcss.com/" class="underline">TailwindCSS.</a>
+        Icons provided by
+        <a href="https://remixicon.com/" class="underline">Remix Icon.</a>
+      </p>
+    </footer>
+  </body>
+</html>
