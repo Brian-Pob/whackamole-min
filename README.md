@@ -8,6 +8,8 @@ A minimal version of the classic game, Whack-a-Mole. In this ultra minimal editi
 
 It is currently a work in progress.
 
+![Screenshot](./public/screenshot.png)
+
 ## Getting Started
 
 ### Dependencies
